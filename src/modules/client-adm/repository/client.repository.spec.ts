@@ -47,7 +47,7 @@ describe("Client Repository unit tests", () => {
     expect(clientDb?.updatedAt).toEqual(client.updatedAt);
   });
 
-  it("should find a product", async () => {
+  it("should find a client", async () => {
     const repository = new ClientRespository();
     const clientDb = await ClientModel.create({
       id: "1",

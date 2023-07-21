@@ -1,10 +1,9 @@
 export interface InputSavePaymentFacadeDTO {
-  id?: string;
   orderId: string;
   amount: number;
 }
 export interface OutputSavePaymentFacadeDTO {
-  id: string;
+  transactionId?: string;
   orderId: string;
   amount: number;
   status: string;
@@ -13,5 +12,5 @@ export interface OutputSavePaymentFacadeDTO {
 }
 
 export default interface PaymentFacadeInterface {
-  save(input: InputSavePaymentFacadeDTO): Promise<OutputSavePaymentFacadeDTO>;
+  process(input: InputSavePaymentFacadeDTO): Promise<OutputSavePaymentFacadeDTO>;
 }

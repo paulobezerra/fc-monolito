@@ -3,6 +3,7 @@ import Id from "../../@shared/domain/value-object/id.value-object";
 import TransactionModel from "../repository/transaction.model";
 import PaymentFacadeFactory from '../factory/facade.factory';
 import e from "express";
+import { InputSavePaymentFacadeDTO } from "./payment.facade.interface";
 
 describe("Payment Facade unit tests", () => {
   let sequelize: Sequelize;
@@ -26,20 +27,19 @@ describe("Payment Facade unit tests", () => {
     // Arrange
     const facade = PaymentFacadeFactory.create();
     
-    const input = {
-      id: "1",
+    const input: InputSavePaymentFacadeDTO = {
       orderId: "1",
       amount: 100,
     };
 
     // Act
-    const transaction = await facade.save(input);
+    const transaction = await facade.process(input);
 
     console.log(transaction)
 
     // Assert
     expect(transaction).toBeDefined();
-    expect(transaction?.transactionId).toBe(input.id);
+    expect(transaction?.transactionId).toBeDefined();
     expect(transaction?.orderId).toBe(input.orderId);
     expect(transaction?.amount).toBe(input.amount);
     expect(transaction?.status).toBe("approved");

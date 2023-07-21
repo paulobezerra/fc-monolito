@@ -15,7 +15,7 @@ export default class PaymentFacade implements ClientAdmFacadeInterface {
     this._processPaymentUseCase = props.processPaymentUseCase;
   }
 
-  async save(
+  async process(
     input: InputSavePaymentFacadeDTO
   ): Promise<OutputSavePaymentFacadeDTO> {
     return await this._processPaymentUseCase.execute(input);
