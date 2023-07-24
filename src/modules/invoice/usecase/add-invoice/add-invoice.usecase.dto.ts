@@ -1,33 +1,35 @@
-export interface InputAddInvoiceUseCaseDTO {
-  id?: string;
+export interface GenerateInvoiceUseCaseInputDto {
   name: string;
   document: string;
   street: string;
-  number: number;
+  number: string;
+  complement: string;
   city: string;
   state: string;
-  zip: string;
+  zipCode: string;
   items: {
-    id?: string;
+    id: string;
     name: string;
     price: number;
   }[];
 }
 
-export interface OutputAddInvoiceUseCaseDTO {
-  id?: string;
+export interface GenerateInvoiceUseCaseOutputDto {
+  id: string;
   name: string;
   document: string;
   street: string;
-  number: number;
+  number: string;
+  complement: string;
   city: string;
   state: string;
-  zip: string;
+  zipCode: string;
   items: {
-    id?: string;
+    id: string;
     name: string;
     price: number;
   }[];
+  total: number;
   createdAt: Date;
   updatedAt: Date;
 }

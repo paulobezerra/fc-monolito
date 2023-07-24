@@ -26,14 +26,13 @@ describe("Invoice Adm Facade unit tests", () => {
     const facade = InvoiceAdmFacadeFactory.create();
 
     const input = {
-      id: "1",
       name: "Invoice 1",
       document: "00000000000",
       street: "Invoice 1 Street",
-      number: 123,
+      number: "123",
       city: "Invoice 1 City",
       state: "Invoice 1 State",
-      zip: "00000000",
+      zipCode: "00000000",
       items: [
         {
           id: "1",
@@ -44,26 +43,27 @@ describe("Invoice Adm Facade unit tests", () => {
     };
 
     // Act
-    await facade.add(input);
+    const result = await facade.generate(input);
 
     // Assert
     const invoice = await InvoiceModel.findOne({
-      where: { id: input.id },
+      where: { id: result.id },
       include: "items",
     });
 
     expect(invoice).toBeDefined();
-    expect(invoice?.id).toBe(input.id);
-    expect(invoice?.name).toBe(input.name);
-    expect(invoice?.document).toBe(input.document);
-    expect(invoice?.street).toBe(input.street);
-    expect(invoice?.number).toBe(input.number);
-    expect(invoice?.city).toBe(input.city);
-    expect(invoice?.state).toBe(input.state);
-    expect(invoice?.zip).toBe(input.zip);
-    expect(invoice?.items[0].id).toBe(input.items[0].id);
-    expect(invoice?.items[0].name).toBe(input.items[0].name);
-    expect(invoice?.items[0].price).toBe(input.items[0].price);
+    expect(invoice?.id).toBe(result.id);
+    expect(invoice?.name).toBe(result.name);
+    expect(invoice?.document).toBe(result.document);
+    expect(invoice?.street).toBe(result.street);
+    expect(invoice?.number).toBe(result.number);
+    expect(invoice?.city).toBe(result.city);
+    expect(invoice?.state).toBe(result.state);
+    expect(invoice?.zip).toBe(result.zipCode);
+    expect(invoice?.items[0].id).toBe(result.items[0].id);
+    expect(invoice?.items[0].name).toBe(result.items[0].name);
+    expect(invoice?.items[0].price).toBe(result.items[0].price);
+    expect(result.total).toBe(100);
   });
 
   it("should find a Invoice", async () => {
@@ -75,7 +75,7 @@ describe("Invoice Adm Facade unit tests", () => {
       name: "Invoice 1",
       document: "00000000000",
       street: "Invoice 1 Street",
-      number: 123,
+      number: "123",
       city: "Invoice 1 City",
       state: "Invoice 1 State",
       zip: "00000000",
@@ -104,11 +104,11 @@ describe("Invoice Adm Facade unit tests", () => {
     expect(result.id).toBe(invoice.id);
     expect(result.name).toBe(invoice.name);
     expect(result.document).toBe(invoice.document);
-    expect(result.street).toBe(invoice.street);
-    expect(result.number).toBe(invoice.number);
-    expect(result.city).toBe(invoice.city);
-    expect(result.state).toBe(invoice.state);
-    expect(result.zip).toBe(invoice.zip);
+    expect(result.address.street).toBe(invoice.street);
+    expect(result.address.number).toBe(invoice.number);
+    expect(result.address.city).toBe(invoice.city);
+    expect(result.address.state).toBe(invoice.state);
+    expect(result.address.zipCode).toBe(invoice.zip);
     expect(result.items[0].id).toBe(item.id);
     expect(result.items[0].name).toBe(item.name);
     expect(result.items[0].price).toBe(item.price);

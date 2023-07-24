@@ -1,11 +1,12 @@
+import { v4 } from "uuid";
 import Address from "../../../@shared/domain/value-object/address.value-object";
 import Id from "../../../@shared/domain/value-object/id.value-object";
 import UseCaseInterface from "../../../@shared/usecase/use-case.interface";
 import Invoice, { InvoiceProps } from "../../domain/invoice";
 import InvoiceGateway from "../../gateway/invoice.gateway";
 import {
-  InputAddInvoiceUseCaseDTO,
-  OutputAddInvoiceUseCaseDTO,
+  GenerateInvoiceUseCaseInputDto,
+  GenerateInvoiceUseCaseOutputDto,
 } from "./add-invoice.usecase.dto";
 
 export default class AddInvoiceUseCase implements UseCaseInterface {
@@ -16,10 +17,10 @@ export default class AddInvoiceUseCase implements UseCaseInterface {
   }
 
   async execute(
-    input: InputAddInvoiceUseCaseDTO
-  ): Promise<OutputAddInvoiceUseCaseDTO> {
+    input: GenerateInvoiceUseCaseInputDto
+  ): Promise<GenerateInvoiceUseCaseOutputDto> {
     const props = {
-      id: new Id(input.id),
+      id: new Id(v4()),
       name: input.name,
       document: input.document,
       address: new Address(
@@ -27,7 +28,7 @@ export default class AddInvoiceUseCase implements UseCaseInterface {
         input.number,
         input.city,
         input.state,
-        input.zip
+        input.zipCode
       ),
       items: input.items.map((item) => ({
         id: new Id(item.id),
@@ -48,12 +49,14 @@ export default class AddInvoiceUseCase implements UseCaseInterface {
       number: invoice.address.number,
       city: invoice.address.city,
       state: invoice.address.state,
-      zip: invoice.address.zip,
+      zipCode: invoice.address.zip,
+      complement: invoice.address.complement,
       items: invoice.items.map((item) => ({
         id: item.id.value,
         name: item.name,
         price: item.price,
       })),
+      total: invoice.items.reduce((total, item) => total + item.price, 0),
       createdAt: invoice.createdAt,
       updatedAt: invoice.updatedAt,
     };

@@ -32,7 +32,7 @@ describe("Invoice Repository unit tests", () => {
       document: "00000000000",
       address: new Address(
         "Invoice 1 Street",
-        123,
+        "123",
         "Invoice 1 City",
         "Invoice 1 State",
         "00000000"
@@ -77,7 +77,7 @@ describe("Invoice Repository unit tests", () => {
       name: "Invoice 1",
       document: "00000000000",
       street: "Invoice 1 Street",
-      number: 123,
+      number: "123",
       city: "Invoice 1 City",
       state: "Invoice 1 State",
       zip: "00000000",
