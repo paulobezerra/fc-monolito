@@ -1,8 +1,6 @@
 import PaymentFacadeInterface from "../facade/payment.facade.interface";
-import ClientAdmFacadeInterface from "../facade/payment.facade.interface";
 import PaymentFacade from "../facade/payment.facede";
-import ClientAdmFacade from "../facade/payment.facede";
-import TransactionRepository from '../repository/transaction.repository';
+import TransactionRepository from "../repository/transaction.repository";
 import ProcessPaymentUseCase from "../usecase/process-payment/process-payment.usecase";
 
 export default class PaymentFacadeFactory {
@@ -10,7 +8,7 @@ export default class PaymentFacadeFactory {
     const repository = new TransactionRepository();
     const processPaymentUseCase = new ProcessPaymentUseCase(repository);
     const facade = new PaymentFacade({
-      processPaymentUseCase
+      processPaymentUseCase,
     });
 
     return facade;

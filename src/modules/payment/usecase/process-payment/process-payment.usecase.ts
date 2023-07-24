@@ -1,4 +1,3 @@
-import Id from "../../../@shared/domain/value-object/id.value-object";
 import UseCaseInterface from "../../../@shared/usecase/use-case.interface";
 import Transaction from "../../domain/transaction";
 import PaymentGateway from "../../gateway/payment.gateway";
@@ -23,8 +22,6 @@ export default class ProcessPaymentUseCase implements UseCaseInterface {
     const persistTransaction = await this.transactionRepository.save(
       transaction
     );
-
-    console.log(persistTransaction);
 
     return {
       transactionId: persistTransaction.id.value,

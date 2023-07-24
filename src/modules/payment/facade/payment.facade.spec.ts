@@ -1,8 +1,6 @@
 import { Sequelize } from "sequelize-typescript";
-import Id from "../../@shared/domain/value-object/id.value-object";
+import PaymentFacadeFactory from "../factory/facade.factory";
 import TransactionModel from "../repository/transaction.model";
-import PaymentFacadeFactory from '../factory/facade.factory';
-import e from "express";
 import { InputSavePaymentFacadeDTO } from "./payment.facade.interface";
 
 describe("Payment Facade unit tests", () => {
@@ -26,7 +24,7 @@ describe("Payment Facade unit tests", () => {
   it("should add a transaction", async () => {
     // Arrange
     const facade = PaymentFacadeFactory.create();
-    
+
     const input: InputSavePaymentFacadeDTO = {
       orderId: "1",
       amount: 100,
@@ -34,8 +32,6 @@ describe("Payment Facade unit tests", () => {
 
     // Act
     const transaction = await facade.process(input);
-
-    console.log(transaction)
 
     // Assert
     expect(transaction).toBeDefined();
